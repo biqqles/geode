@@ -1,23 +1,29 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'redis'
 
 class GeodeTest < Minitest::Test
-  def test_store_initialisation
-    # the store name can be specified either as a symbol or a string
-    Geode::SequelStore.new(:my_store)
-    Geode::SequelStore.new('my_store')
+  def setup
+    super
+    Redis.new.flushdb
+    @store = Geode::RedisStore.new(:store) # TODO: run tests for SequelStore
   end
 
-  def test_storage_works
-    store = Geode::SequelStore.new(:a)
-    store.open do |table|
+  def test_store_initialisation
+    # the store name can be specified either as a symbol or a string
+    @store.class.new(:my_store)
+    @store.class.new('my_store')
+  end
+
+  def test_open
+    @store.open do |table|
       table['key'] = 'value'
       table['nested'] = { hash: 'value' }
     end
 
-    store.open do |table|
-      expected = { 0 => 3, 'key' => 'value', 'nested' => { hash: 'value' } }
+    @store.open do |table|
+      expected = { 'key' => 'value', 'nested' => { hash: 'value' } }
       assert_equal expected, table
     end
   end
@@ -35,5 +41,16 @@ class GeodeTest < Minitest::Test
 
     p store.open { |table| table[:time] }
     # {:now=>2021-10-15 16:34:22.664022392 +0100}
+  end
+
+  def test_peek
+    assert_equal({}, @store.peek)
+
+    @store.open { |table| table[:contents] = :here }
+
+    # peek returns the table
+    assert_equal({ contents: :here }, @store.peek)
+    # but changes to it are not persisted
+    refute_equal(@store.peek.clear, @store.peek)
   end
 end

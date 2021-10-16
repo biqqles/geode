@@ -53,7 +53,6 @@ Connect to a store within Redis.
 - `name` (Symbol, String) The name of the store
 - `connection` (Hash, String) Connection parameters passed to `Redis.new`. Defaults to empty hash
 
-
 #### `#open`
 "Open" the store for reading and/or writing.
 ##### Parameters:
@@ -61,6 +60,13 @@ Connect to a store within Redis.
    - `table` (Hash) The table belonging to `@name`
 ##### Returns:
 (Object) The return value of the block
+
+#### `#peek`
+"Peek" inside the store, returning a copy of its table.
+Changes to this copy will NOT be persisted in the store.
+Use this if you simply need to fetch a value from the store.
+##### Returns:
+(Hash) A copy of the store's table
 
 ---
 
@@ -86,6 +92,13 @@ A table named `geode` will be created and used to store the data.
     - `table` (Hash) The table belonging to `@name`
 ##### Returns:
 (Object) The return value of the block
+
+#### `#peek`
+"Peek" inside the store, returning a copy of its table.
+Changes to this copy will NOT be persisted in the store.
+Use this if you simply need to fetch a value from the store.
+##### Returns:
+(Hash) A copy of the store's table
 
 ---
 

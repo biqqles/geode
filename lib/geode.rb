@@ -15,5 +15,13 @@ module Geode
     def open
       raise NotImplementedError
     end
+
+    # "Peek" inside the store, returning a copy of its table.
+    # Changes to this copy will NOT be persisted in the store.
+    # Use this if you simply need to fetch a value from the store.
+    # @return [Hash] A copy of the store's table
+    def peek
+      open(&:itself)
+    end
   end
 end
