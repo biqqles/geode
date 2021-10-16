@@ -10,7 +10,13 @@ module Geode
 
     # "Open" the store for reading and/or writing.
     # @yield a block which receives `table` as its sole parameter
-    # @yieldparam table [Hash] The table belonging to `@name`
+    # @yieldparam table [Hash] The store's table. Changes to this Hash will
+    # be persisted in the store
+    # When in doubt, use this method.
+    # @example
+    #   "store.open { |table| table[:key] = 5 }"
+    # @example
+    #   "store.open { |table| table[:key] } #=> 5"
     # @return [Object] The return value of the block
     def open
       raise NotImplementedError
@@ -18,10 +24,25 @@ module Geode
 
     # "Peek" inside the store, returning a copy of its table.
     # Changes to this copy will NOT be persisted in the store.
-    # Use this if you simply need to fetch a value from the store.
+    # Use this if you simply want to view the store's table.
+    # @example
+    #   "store.peek.key?(:test) #=> false"
     # @return [Hash] A copy of the store's table
     def peek
       open(&:itself)
+    end
+
+    # Retrieve the object at `key` from the store.
+    # This is implemented using `#peek` and therefore
+    # changes to the object returned by this method will NOT
+    # be persisted in the store.
+    # Use this if you simply need to fetch a value from the store.
+    # @example
+    #   "store[:key] #=> 5"
+    # @param key [Object] The key to look up
+    # @return [Object] The object at `key`
+    def [](key)
+      peek[key]
     end
   end
 end

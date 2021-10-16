@@ -39,7 +39,7 @@ class GeodeTest < Minitest::Test
       table[:time][:now] = Time.now
     end
 
-    p store.open { |table| table[:time] }
+    p store[:time]
     # {:now=>2021-10-15 16:34:22.664022392 +0100}
   end
 
@@ -52,5 +52,13 @@ class GeodeTest < Minitest::Test
     assert_equal({ contents: :here }, @store.peek)
     # but changes to it are not persisted
     refute_equal(@store.peek.clear, @store.peek)
+  end
+
+  def test_reference
+    assert_nil @store[:anything]
+
+    @store.open { |table| table[:contents] = :here }
+
+    assert_equal(:here, @store[:contents])
   end
 end

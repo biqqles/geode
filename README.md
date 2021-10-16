@@ -55,8 +55,14 @@ Connect to a store within Redis.
 
 #### `#open`
 "Open" the store for reading and/or writing.
+##### Examples:
+```ruby
+store.open { |table| table[:key] = 5 }
+store.open { |table| table[:key] } #=> 5
+```
 ##### Parameters:
-- a block which receives `table` as its sole parameter
+- a block which receives `table` as its sole parameter. Changes to this Hash will
+  be persisted in the store.
    - `table` (Hash) The table belonging to `@name`
 ##### Returns:
 (Object) The return value of the block
@@ -65,8 +71,27 @@ Connect to a store within Redis.
 "Peek" inside the store, returning a copy of its table.
 Changes to this copy will NOT be persisted in the store.
 Use this if you simply need to fetch a value from the store.
+##### Examples:
+```ruby
+store.peek.key?(:test) #=> false
+```
 ##### Returns:
 (Hash) A copy of the store's table
+
+#### `#[]`
+Retrieve the object at `key` from the store.
+This is implemented using `#peek` and therefore
+changes to the object returned by this method will NOT
+be persisted in the store.
+Use this if you simply need to fetch a value from the store.
+##### Examples:
+```ruby
+store[:key] #=> 5
+```
+##### Parameters:
+- `key` (Object) The key to look up
+##### Returns:
+(Object) The object at `key`
 
 ---
 
@@ -99,6 +124,17 @@ Changes to this copy will NOT be persisted in the store.
 Use this if you simply need to fetch a value from the store.
 ##### Returns:
 (Hash) A copy of the store's table
+
+#### `#[]`
+Retrieve the object at `key` from the store.
+This is implemented using `#peek` and therefore
+changes to the object returned by this method will NOT
+be persisted in the store.
+Use this if you simply need to fetch a value from the store.
+##### Parameters:
+- `key` (Object) The key to look up
+##### Returns:
+(Object) The object at `key`
 
 ---
 
