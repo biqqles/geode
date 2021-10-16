@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'redis'
 
-class GeodeTest < Minitest::Test
+require 'redis'
+require 'sequel'
+
+
+class GeodeRedisTest < Minitest::Test
   def setup
     super
     Redis.new.flushdb
-    @store = Geode::RedisStore.new(:store) # TODO: run tests for SequelStore
+    @store = Geode::RedisStore.new(:store)
   end
 
   def test_store_initialisation
@@ -60,5 +63,13 @@ class GeodeTest < Minitest::Test
     @store.open { |table| table[:contents] = :here }
 
     assert_equal(:here, @store[:contents])
+  end
+end
+
+class GeodeSequelTest < GeodeRedisTest
+  def setup
+    super
+    Sequel.postgres.run 'drop table if exists geode'
+    @store = Geode::SequelStore.new(:store)
   end
 end
