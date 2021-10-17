@@ -19,8 +19,7 @@ module Geode
       connection ||= { adapter: 'postgres' }
       db = Sequel.connect(connection)
       db.create_table? :geode do
-        primary_key :id
-        String :name
+        String :name, primary_key: true
         File :value
       end
 
@@ -29,7 +28,7 @@ module Geode
 
     def open
       store = @db.where(name: @name)
-      table = if store.first.nil?
+      table = if store.empty?
                 store.insert(name: @name, value: '')
                 {}
               else
