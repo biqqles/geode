@@ -26,5 +26,9 @@ module Geode
         @redis.set @name, Marshal.dump(table)
       end
     end
+
+    def destroy
+      @redis.del @name
+    end
   end
 end

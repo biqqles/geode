@@ -64,12 +64,31 @@ class GeodeRedisTest < Minitest::Test
 
     assert_equal(:here, @store[:contents])
   end
+
+  def test_destroy
+    refute store_exists? :store
+
+    @store.open {}
+    assert store_exists? :store
+
+    @store.destroy
+    refute store_exists? :store
+  end
+
+  def store_exists?(name)
+    Redis.new.exists?(name)
+  end
 end
 
 class GeodeSequelTest < GeodeRedisTest
   def setup
     super
-    Sequel.postgres.run 'drop table if exists geode'
+    Sequel.postgres.drop_table? :geode
     @store = Geode::SequelStore.new(:store)
+  end
+
+  def store_exists?(name)
+    table = Sequel.postgres[:geode]
+    !table.where_single_value(name: name.to_s).nil?
   end
 end

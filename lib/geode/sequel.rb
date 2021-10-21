@@ -39,5 +39,9 @@ module Geode
         store.update(value: Sequel.blob(Marshal.dump(table)))
       end
     end
+
+    def destroy
+      @db.where(name: @name).delete
+    end
   end
 end

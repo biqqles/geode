@@ -19,7 +19,7 @@ module Geode
     #   "store.open { |table| table[:key] } #=> 5"
     # @return [Object] The return value of the block
     def open
-      raise NotImplementedError
+      raise 'subclasses must implement #open'
     end
 
     # "Peek" inside the store, returning a copy of its table.
@@ -43,6 +43,12 @@ module Geode
     # @return [Object] The object at `key`
     def [](key)
       peek[key]
+    end
+
+    # "Destroy" the store, deleting all data.
+    # The store can be opened again, recreating it in a blank state.
+    def destroy
+      raise 'subclasses must implement #destroy'
     end
   end
 end

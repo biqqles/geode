@@ -93,6 +93,10 @@ store[:key] #=> 5
 ##### Returns:
 (Object) The object at `key`
 
+#### `#destroy`
+"Destroy" the store, deleting all data.
+The store can be opened again, recreating it in a blank state.
+
 ---
 
 ### Geode::SequelStore
@@ -135,6 +139,10 @@ Use this if you simply need to fetch a value from the store.
 - `key` (Object) The key to look up
 ##### Returns:
 (Object) The object at `key`
+
+#### `#destroy`
+"Destroy" the store, deleting all data.
+The store can be opened again, recreating it in a blank state.
 
 ---
 
