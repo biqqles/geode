@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    geode (0.4.0)
+    geode (0.5.0)
       pg (~> 1.0)
       redis (~> 4.0)
       sequel (~> 5.0)
@@ -12,7 +12,6 @@ GEM
     docile (1.4.0)
     minitest (5.14.4)
     pg (1.2.3)
-    rake (13.0.6)
     redis (4.5.0)
     sequel (5.49.0)
     simplecov (0.21.2)
@@ -28,7 +27,6 @@ PLATFORMS
 DEPENDENCIES
   geode!
   minitest (~> 5.0)
-  rake (~> 13.0)
   simplecov
 
 BUNDLED WITH
