@@ -29,6 +29,7 @@ module Geode
 
     def destroy
       @redis.del @name
+      nil
     end
   end
 end

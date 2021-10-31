@@ -42,6 +42,7 @@ module Geode
 
     def destroy
       @db.where(name: @name).delete
+      nil
     end
   end
 end
