@@ -3,8 +3,11 @@ require 'redis'
 require_relative '../geode'
 
 module Geode
+
   # A store implemented using Redis.
-  class RedisStore < Store
+  class RedisStore
+    include Store
+
     # Connect to a store held in Redis.
     # @param name [Symbol, String] The name of the store
     # @param connection [Hash, String] Connection parameters passed to `Redis.new`.

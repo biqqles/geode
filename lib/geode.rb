@@ -1,6 +1,7 @@
 module Geode
-  # Subclass this to implement your own stores.
-  class Store
+
+  # Include this to implement your own stores. You must implement the #open and #destroy methods.
+  module Store
     # Connect to a store.
     # @param name [Symbol, String] The name of the store
     # @param connection [Hash, String] Connection parameters passed to the DB client
@@ -19,7 +20,11 @@ module Geode
     #   "store.open { |table| table[:key] } #=> 5"
     # @return [Object] The return value of the block
     def open
-      raise 'subclasses must implement #open'
+    end
+
+    # "Destroy" the store, deleting all data.
+    # The store can be opened again, recreating it in a blank state.
+    def destroy
     end
 
     # "Peek" inside the store, returning a copy of its table.
@@ -43,12 +48,6 @@ module Geode
     # @return [Object] The object at `key`
     def [](key)
       peek[key]
-    end
-
-    # "Destroy" the store, deleting all data.
-    # The store can be opened again, recreating it in a blank state.
-    def destroy
-      raise 'subclasses must implement #destroy'
     end
   end
 end

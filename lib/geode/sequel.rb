@@ -3,11 +3,14 @@ require 'sequel'
 require_relative '../geode'
 
 module Geode
+
   # A store that uses a relational database supported by Sequel instead of Redis.
   # This is mainly useful for Heroku, where persistent Postgres is free, but
   # the same is not true of Redis.
   # Unless you have a similarly good reason to use this class, use `RedisStore` instead.
-  class SequelStore < Store
+  class SequelStore
+    include Store
+
     # Connect to a store held in a relational database supported by Sequel.
     # A table named `geode` will be created and used to store the data.
     # @param name [Symbol, String] The name of the store
