@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MPL-2.0'
   spec.summary       = 'Store Ruby objects in Redis or Sequel'
   spec.homepage      = 'https://github.com/biqqles/geode'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.2.0')
+  spec.required_ruby_version = '>= 2.2.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = spec.homepage
