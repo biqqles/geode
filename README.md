@@ -14,7 +14,7 @@ store.open do |table|
   table[:time][:now] = Time.now
 end
 
-p store.open { |table| table[:time] }
+p store[:time]
 # {:now=>2021-10-15 16:34:22.664022392 +0100}
 ```
 
