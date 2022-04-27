@@ -8,8 +8,8 @@ class Geode::RedisStore
 
   # Connect to a store held in Redis.
   # @param name [Symbol, String] The name of the store
-  # @param connection [Hash, String] Connection parameters passed to `Redis.new`.
-  #                                  Defaults to empty hash
+  # @param connection [Hash] Connection parameters passed to `Redis.new`.
+  #                          Defaults to empty hash
   def initialize(name, connection = nil)
     super
     connection ||= {}

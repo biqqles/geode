@@ -117,7 +117,7 @@ A store implemented using Redis.
 Connect to a store within Redis.
 - ##### Parameters:
     - `name` (Symbol, String) The name of the store
-    - `connection` (Hash, String) Connection parameters passed to `Redis.new`.
+    - `connection` (Hash) Connection parameters passed to `Redis.new`.
        Defaults to empty hash
 
 ## `SequelStore`
