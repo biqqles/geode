@@ -15,8 +15,8 @@ class GeodeRedisTest < Minitest::Test
 
   def test_store_initialisation
     # the store name can be specified either as a symbol or a string
-    @store.class.new(:my_store)
-    @store.class.new('my_store')
+    @store.class.new(:my_store, GeodeSequelTest::CONNECTION)
+    @store.class.new('my_store', GeodeSequelTest::CONNECTION)
   end
 
   def test_open
@@ -81,14 +81,17 @@ class GeodeRedisTest < Minitest::Test
 end
 
 class GeodeSequelTest < GeodeRedisTest
+  # remove user and password if running locally
+  CONNECTION = {adapter: 'postgres', host: '0.0.0.0', user: 'postgres', password: 'postgres'}
+
   def setup
     super
-    Sequel.postgres.drop_table? :geode
-    @store = Geode::SequelStore.new(:store)
+    Sequel.postgres(CONNECTION).drop_table? :geode
+    @store = Geode::SequelStore.new(:store, CONNECTION)
   end
 
   def store_exists?(name)
-    table = Sequel.postgres[:geode]
+    table = Sequel.postgres(CONNECTION)[:geode]
     !table.where_single_value(name: name.to_s).nil?
   end
 end

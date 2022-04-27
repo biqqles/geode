@@ -1,0 +1,28 @@
+name: Ruby
+
+on: [ push, pull_request ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: [ '2.7', '3.1' ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.4.0
+
+      - name: Start Postgres
+        uses: Daniel-Marynicz/postgresql-action@master
+
+      - name: Set up Ruby ${{ matrix.python-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true  # runs bundle install
+
+      - name: Run tests
+        run: bundle exec ruby test/geode_test.rb
