@@ -16,7 +16,7 @@ jobs:
         uses: supercharge/redis-github-action@1.4.0
 
       - name: Start Postgres
-        uses: Daniel-Marynicz/postgresql-action@master
+        uses: Daniel-Marynicz/postgresql-action@1.0.0
 
       - name: Set up Ruby ${{ matrix.python-version }}
         uses: ruby/setup-ruby@v1
