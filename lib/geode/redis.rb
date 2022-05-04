@@ -28,7 +28,7 @@ class Geode::RedisStore
     end
   end
 
-  def destroy
+  def destroy!
     @redis.del @name
     nil
   end

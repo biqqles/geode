@@ -41,7 +41,7 @@ class Geode::SequelStore
     end
   end
 
-  def destroy
+  def destroy!
     @db.where(name: @name).delete
     nil
   end

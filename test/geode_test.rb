@@ -71,7 +71,7 @@ class GeodeRedisTest < Minitest::Test
     @store.open {}
     assert store_exists? :store
 
-    @store.destroy
+    @store.destroy!
     refute store_exists? :store
   end
 

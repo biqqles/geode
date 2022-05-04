@@ -95,12 +95,12 @@ store[:key] #=> 5
 - ##### Returns:
     - (Object) The object at `key`
 ---
-### `#destroy`
+### `#destroy!`
 "Destroy" the store, deleting all data.
 The store can be opened again, recreating it in a blank state.
 
 ```ruby
-store.destroy
+store.destroy! #=> nil
 ```
 ---
 

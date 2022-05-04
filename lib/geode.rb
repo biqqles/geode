@@ -22,7 +22,7 @@ module Geode::Store
 
   # "Destroy" the store, deleting all data.
   # The store can be opened again, recreating it in a blank state.
-  def destroy
+  def destroy!
   end
 
   # "Peek" inside the store, returning a copy of its table.
