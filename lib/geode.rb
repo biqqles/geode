@@ -1,4 +1,5 @@
-# Include this to implement your own stores. You must implement the #open and #destroy methods.
+# Include this module to implement your own stores.
+# You must implement the #initialize, #open and #destroy! methods.
 module Geode::Store
   # Connect to a store.
   # @param name [Symbol, String] The name of the store
