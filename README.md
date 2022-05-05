@@ -42,7 +42,7 @@ $ bundle install
 ```
 
 # Usage
-## `Store`
+## module `Store`
 A [`Store`](lib/geode.rb) is simply an abstraction (over some underlying database) of a key-value
 store, where the values can be any Ruby object. Hashes as values enable hierarchical data
 organisation.
@@ -51,7 +51,7 @@ geode provides two types of `Store`: [`RedisStore`](#redisstore) and [`SequelSto
 As the names suggest, these differ in terms of which database adapters they use, but otherwise,
 all their methods behave identically.
 
-**A store, once initialised, has three basic operations; `#open`, `#peek` and `#destroy`:**
+**A store, once initialised, has three basic operations; `#open`, `#peek` and `#destroy!`:**
 
 ---
 ### `#open`
@@ -102,25 +102,24 @@ The store can be opened again, recreating it in a blank state.
 ```ruby
 store.destroy! #=> nil
 ```
----
 
-**To implement your own variants of `Store`:**
-- include `Geode::Store` in your class
-- implement the `#initialize`, `#open` and `#destroy` methods.
+## Classes
 
-## `RedisStore`
+### `RedisStore`
 [*`require 'geode/redis'`*](lib/geode/redis.rb)
 
 A store implemented using Redis.
 
-### `#initialize(name, connection = nil)`
+#### `#initialize(name, connection = nil)`
 Connect to a store within Redis.
 - ##### Parameters:
     - `name` (Symbol, String) The name of the store
     - `connection` (Hash) Connection parameters passed to `Redis.new`.
        Defaults to empty hash
 
-## `SequelStore`
+---
+
+### `SequelStore`
 [*`require 'geode/sequel'`*](lib/geode/sequel.rb)
 
 A store that uses a relational database supported by Sequel instead of Redis.
@@ -133,10 +132,18 @@ The `pg` gem will be installed by default. If you need to work with a database o
 you should install that database's adapter yourself. Sequel will determine the adapter it uses
 based on the `connection` hash.
 
-### `#initialize(name, connection = nil)`
+#### `#initialize(name, connection = nil)`
 Connect to a store held in a relational database supported by Sequel.
 A table named `geode` will be created and used to store the data.
 - ##### Parameters:
     - `name` (Symbol, String) The name of the store
     - `connection` (Hash, String) Connection parameters passed to `Sequel.connect`.
        Defaults to `{ adapter: 'postgres' }`
+
+---
+
+### To implement your own variants of `Store`
+Simply,
+
+- include [`Geode::Store`](lib/geode.rb) in your class
+- implement the `#initialize`, `#open` and `#destroy!` methods.
