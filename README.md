@@ -102,6 +102,7 @@ The store can be opened again, recreating it in a blank state.
 ```ruby
 store.destroy! #=> nil
 ```
+---
 
 ## Classes
 
